@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
-const db = mongoose.connect('mongodb://localhost/qna', { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('successfully connect to QnA DB'));
+
+mongoose.connect('mongodb://localhost/qna', { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('successfully connect to QnA DB'));
 mongoose.Promise = global.Promise;
 
 const answerSchema = new mongoose.Schema({
@@ -7,32 +10,36 @@ const answerSchema = new mongoose.Schema({
   location: String,
   email: String,
   body: String,
-  yes: {type: Number, default: 0},
-  no: {type: Number, default: 0}
+  yes: { type: Number, default: 0 },
+  no: { type: Number, default: 0 },
 
 },
-  {
-    timestamps: true
-  }
-);
+{
+  timestamps: true,
+});
 
 const qnaSchema = new mongoose.Schema({
   user: String,
   location: String,
   email: String,
   body: String,
-  answers: [answerSchema]
+  answers: [answerSchema],
 },
-  {
-    timestamps: true
-  }
-);
+{
+  timestamps: true,
+});
 
 const Qna = mongoose.model('Qna', qnaSchema);
 
-// Qna.create({user: 'test', location: 'kasjdlkasd', email: 'asdasd', body: 'a;sdklafsd'})
-//   .then(result => console.log(result));
-Qna.find({_id: '600093a88dd8270b3a69bd24'})
-  .then(result => console.log(result));
+// this one is how to insert the question
+// Qna.create({ user: 'test', location: 'kasjdlkasd', email: 'asdasd' })
+//   .then((result) => console.log(result));
+Qna.findById('600093a88dd8270b3a69bd24')
+  .then((result) => {
+    // this one is how to insert the answer in follow id
+    // result.answers.push({user: 'test', location: 'kasjdlkasd', email: 'asdasd'});
+    // result.save();
+    console.log(result);
+  });
 
 module.exports = Qna;
