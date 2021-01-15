@@ -20,6 +20,7 @@ const answerSchema = new mongoose.Schema({
 });
 
 const qnaSchema = new mongoose.Schema({
+  questionid: Number,
   user: String,
   location: String,
   email: String,
@@ -33,11 +34,14 @@ const qnaSchema = new mongoose.Schema({
 const Qna = mongoose.model('Qna', qnaSchema);
 const Answer = mongoose.model('Answer', answerSchema);
 
-Qna.findById('6000f4af9bb92236ce7326a1')
-  .then((result) => {
-    // access subdocument for certain id
-    console.log(result.answers.id('6000f4b19bb92236ce7327c6').location);
-  }).catch((error) => console.log(error));
+Qna.find({})
+  .then((result) => console.log(result));
+
+// Qna.findById('6000f4af9bb92236ce7326a1')
+//   .then((result) => {
+//     // access subdocument for certain id
+//     console.log(result.answers.id('6000f4b19bb92236ce7327c6'));
+//   }).catch((error) => console.log(error));
 
 // console.log(faker.address.zipCodeByState());
 

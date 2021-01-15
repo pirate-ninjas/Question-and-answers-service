@@ -3,6 +3,7 @@ const faker = require('faker');
 const Qna = require('./mongodb.js');
 
 const seedMyDB = () => {
+  let id = 0;
   for (let i = 0; i < 100; i += 1) {
     const randomName = faker.name.findName();
     const randomLocation = `${faker.address.state()} ${faker.address.zipCodeByState()}`;
@@ -10,6 +11,7 @@ const seedMyDB = () => {
     const sentences = faker.lorem.sentences();
 
     Qna.create({
+      questionid: id,
       user: randomName,
       location: randomLocation,
       email: randomEmail,
@@ -34,6 +36,7 @@ const seedMyDB = () => {
         );
         result.save();
       });
+    id += 1;
   }
 };
 
