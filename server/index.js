@@ -8,16 +8,17 @@ const Qna = require('../database/mongodb.js');
 
 app.use(express.static('public'));
 app.use(express.json());
-
-app.get('/api/qna', (req, res) => {
-  Qna.find({ questionid: { $lte: 15, $gte: 0 } }).sort('questionid')
+// /5 and /7 different questions rendered
+app.get('/api/products/:id/qna', (req, res) => {
+  const questionid = parseInt(req.params.id, 10);
+  Qna.find({ questionid: { $lte: questionid + 10, $gte: questionid } }).sort('questionid')
     .then((result) => {
       console.log(result);
       res.send(result);
     });
 });
 
-app.post('/api/qna', (req, res) => {
+app.post('/api/products/:id/qna', (req, res) => {
   const {
     user, location, email, body,
   } = req.body;
@@ -34,7 +35,7 @@ app.post('/api/qna', (req, res) => {
     });
 });
 
-app.post('/api/qna/answer', (req, res) => {
+app.post('/api/products/:id/qna/answer', (req, res) => {
   const {
     _id, user, location, email, body,
   } = req.body;
@@ -53,7 +54,7 @@ app.post('/api/qna/answer', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.patch('/api/qna/answer/yes', (req, res) => {
+app.patch('/api/products/:id/qna/answer/yes', (req, res) => {
   const {
     _id, _aid,
   } = req.body;
@@ -67,7 +68,7 @@ app.patch('/api/qna/answer/yes', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.patch('/api/qna/answer/no', (req, res) => {
+app.patch('/api/products/:id/qna/answer/no', (req, res) => {
   const {
     _id, _aid,
   } = req.body;
