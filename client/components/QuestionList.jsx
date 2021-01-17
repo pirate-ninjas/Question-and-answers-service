@@ -1,9 +1,9 @@
 import React from 'react';
 
-const QuestionList = () => (
+const QuestionList = (props) => (
   <div>
     <h3>
-      BigJohnWorks
+      {props.user}
       <span>4 years ago </span>
     </h3>
     <h2>Would you please carry the orca?</h2>
