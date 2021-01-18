@@ -34,45 +34,52 @@ const QuestionList = (props) => {
     console.log(datas[3].answers);
     console.log(isQuestionClicked);
   };
-  return (
-    datas.slice(0, 10).map((data, idx) => (
-      <div key={`${data._id}`}>
-        <h3>
-          {data.user}
-          <span>4 years ago </span>
-        </h3>
-        <h2 onClick={() => handleClick(idx)}>
-          {data.body}
-          <span>
+  if (!isQuestionClicked) {
+    return (
+      datas.slice(0, 10).map((data, idx) => (
+        <div key={`${data._id}`}>
+          <h3>
+            {data.user}
+            <span>4 years ago </span>
+          </h3>
+          <h2 onClick={() => handleClick(idx)}>
+            {data.body}
             <span>
-              <p>
-                {`${data.answers.length} answers`}
-              </p>
+              <span>
+                <p>
+                  {`${data.answers.length} answers`}
+                </p>
+              </span>
+              <button type="button">Answer the Question</button>
             </span>
-            <button type="button">Answer the Question</button>
-          </span>
-        </h2>
-        <div>
-          <h4>
-            {data.answers[0].user}
-            <span>4 years ago</span>
-          </h4>
-          <h5>
-            {data.answers[0].body}
-          </h5>
-          <span>
-            Helpful?
+          </h2>
+          <div>
+            <h4>
+              {data.answers[0].user}
+              <span>4 years ago</span>
+            </h4>
+            <h5>
+              {data.answers[0].body}
+            </h5>
             <span>
-              {`Yes. ${data.answers[0].yes}`}
+              Helpful?
+              <span>
+                {`Yes. ${data.answers[0].yes}`}
+              </span>
+              <span>
+                {`No. ${data.answers[0].no}`}
+              </span>
             </span>
-            <span>
-              {`No. ${data.answers[0].no}`}
-            </span>
-          </span>
+          </div>
         </div>
-      </div>
-    ))
-  );
+      ))
+    );
+  }
+  if (isQuestionClicked) {
+    return (
+      <h1 onClick={() => toggleIsQuestionClicked()}> Question Detail Section </h1>
+    );
+  }
 };
 
 export default QuestionList;
