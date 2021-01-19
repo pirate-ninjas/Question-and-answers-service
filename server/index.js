@@ -11,7 +11,8 @@ app.use(express.json());
 // /5 and /7 different questions rendered
 app.get('/api/products/:id/qna', (req, res) => {
   const questionid = parseInt(req.params.id, 10);
-  Qna.find({ questionid: { $lte: questionid + 10, $gte: questionid } }).sort('questionid')
+  Qna.find({ questionid: { $lte: questionid + 10, $gte: questionid } }).sort({ questionid: 1 })
+    .sort({ createdAt: -1 })
     .then((result) => {
       console.log(result);
       res.send(result);
@@ -20,13 +21,13 @@ app.get('/api/products/:id/qna', (req, res) => {
 
 app.post('/api/products/:id/qna', (req, res) => {
   const {
-    user, location, email, body,
+    user, location, email, body, questionid,
   } = req.body;
   Qna.findOne().sort('-questionid')
     .then((result) => {
       console.log(result.questionid);
       Qna.create({
-        questionid: result.questionid + 1, user, location, email, body,
+        questionid, user, location, email, body,
       })
         .then((created) => {
           console.log(created);
