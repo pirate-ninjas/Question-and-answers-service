@@ -1,18 +1,18 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import Axios from 'axios';
 
-const QuestionForm = (props) => {
+const AnswerForm = (props) => {
+  // eslint-disable-next-line camelcase
+  const { question_id } = props;
   const [body, setBody] = useState('');
   const [user, setUser] = useState('');
   const [location, setLocation] = useState('');
   const [email, setEmail] = useState('');
   const handleClick = () => {
     const request = {
+      _id: question_id,
       body,
       user,
       location,
@@ -20,19 +20,19 @@ const QuestionForm = (props) => {
       questionid: 1,
     };
     // eslint-disable-next-line no-console
+    console.log(question_id);
     console.log(request);
-    Axios.post('/api/products/1/qna', request)
+    Axios.post('/api/products/1/qna/answer', request)
       .then((result) => {
         console.log(result);
         props.getDatabase();
-        props.handleQuestionButton();
+        props.toggleIsQuestionClicked();
       });
   };
   return (
     <div>
       <label htmlFor="body">
-        Question
-        <span onClick={props.handleQuestionButton}>X</span>
+        Answer*
         <textarea name="body" value={body} onChange={(e) => setBody(e.target.value)} />
       </label>
       <br />
@@ -57,10 +57,10 @@ const QuestionForm = (props) => {
       </label>
       <br />
       <button type="button" onClick={() => handleClick()}>
-        Post a Question
+        Post answer
       </button>
     </div>
   );
 };
 
-export default QuestionForm;
+export default AnswerForm;

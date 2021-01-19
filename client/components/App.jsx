@@ -13,7 +13,6 @@ const App = () => {
   };
   const handleQuestionButton = () => {
     setIsQuestionClicked(!isQuestionClicked);
-    console.log(isQuestionClicked);
   };
   useEffect(() => {
     Axios.get('/api/products/1/qna')
@@ -32,7 +31,11 @@ const App = () => {
       <h1>Question & Answers</h1>
       <h3>{`1 - 10 of ${datas.length} Questions`}</h3>
       <button type="button" onClick={() => handleQuestionButton()}>Ask a question</button>
-      <QuestionList list={datas} />
+      <QuestionList
+        getDatabase={getDatabase}
+        handleQuestionButton={handleQuestionButton}
+        list={datas}
+      />
     </div>
   );
 };

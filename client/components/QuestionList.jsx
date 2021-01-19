@@ -4,6 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
+import PostAnswer from './PostAnswer';
 
 const QuestionList = (props) => {
   const [datas, setData] = useState([{
@@ -18,10 +19,6 @@ const QuestionList = (props) => {
   const [question, setQuestion] = useState({});
   const [isQuestionClicked, setIsQuestionClicked] = useState(false);
   useEffect(() => {
-    // Axios.get('/api/products/1/qna')
-    //   .then((res) => {
-    //     setData(res.data);
-    //   });
     setData(props.list);
   });
   const toggleIsQuestionClicked = () => {
@@ -30,9 +27,6 @@ const QuestionList = (props) => {
   const handleClick = (idx) => {
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();
-    console.log(question);
-    console.log(datas[3].answers);
-    console.log(isQuestionClicked);
   };
   if (!isQuestionClicked) {
     return (
@@ -44,15 +38,8 @@ const QuestionList = (props) => {
           </h3>
           <h2 onClick={() => handleClick(idx)}>
             {data.body}
-            <span>
-              <span>
-                <p>
-                  {`${data.answers.length} answers`}
-                </p>
-              </span>
-              <button type="button">Answer the Question</button>
-            </span>
           </h2>
+          <button onClick={() => handleClick(idx)} type="button">Answer the Question</button>
           {
             data.answers.length > 0
             && (
@@ -82,7 +69,12 @@ const QuestionList = (props) => {
   }
   if (isQuestionClicked) {
     return (
-      <h1 onClick={() => toggleIsQuestionClicked()}> Question Detail Section </h1>
+      <PostAnswer
+        onClick={() => handleClick()}
+        toggleIsQuestionClicked={toggleIsQuestionClicked}
+        currentQuestion={question}
+        getDatabase={props.getDatabase}
+      />
     );
   }
   return (
