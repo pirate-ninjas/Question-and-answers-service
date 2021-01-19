@@ -53,24 +53,29 @@ const QuestionList = (props) => {
               <button type="button">Answer the Question</button>
             </span>
           </h2>
-          <div>
-            <h4>
-              {data.answers[0].user}
-              <span>4 years ago</span>
-            </h4>
-            <h5>
-              {data.answers[0].body}
-            </h5>
-            <span>
-              Helpful?
+          {
+            data.answers.length > 0
+            && (
+            <div>
+              <h4>
+                {data.answers[0].user}
+                <span>4 years ago</span>
+              </h4>
+              <h5>
+                {data.answers[0].body}
+              </h5>
               <span>
-                {`Yes. ${data.answers[0].yes}`}
+                Helpful?
+                <span>
+                  {`Yes. ${data.answers[0].yes}`}
+                </span>
+                <span>
+                  {`No. ${data.answers[0].no}`}
+                </span>
               </span>
-              <span>
-                {`No. ${data.answers[0].no}`}
-              </span>
-            </span>
-          </div>
+            </div>
+            )
+          }
         </div>
       ))
     );
@@ -80,6 +85,9 @@ const QuestionList = (props) => {
       <h1 onClick={() => toggleIsQuestionClicked()}> Question Detail Section </h1>
     );
   }
+  return (
+    <h1>Your react is GG</h1>
+  );
 };
 
 export default QuestionList;
