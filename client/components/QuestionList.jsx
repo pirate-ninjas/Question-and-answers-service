@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
 import PostAnswer from './PostAnswer';
 
 const QuestionList = (props) => {
@@ -27,6 +29,13 @@ const QuestionList = (props) => {
   const handleClick = (idx) => {
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();
+  };
+  const handleYesButton = (id, aid) => {
+    const data = { _id: id, _aid: aid };
+    Axios.patch('/api/products/1/qna/answer/yes', data)
+      .then(() => {
+        props.getDatabase();
+      });
   };
   if (!isQuestionClicked) {
     return (
@@ -53,7 +62,7 @@ const QuestionList = (props) => {
               </h5>
               <span>
                 Helpful?
-                <span>
+                <span onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
                   {`Yes. ${data.answers[0].yes}`}
                 </span>
                 <span>
