@@ -19,6 +19,7 @@ const QuestionList = (props) => {
       }],
   }]);
   const [question, setQuestion] = useState({});
+  const [index, setIndex] = useState(0);
   const [isQuestionClicked, setIsQuestionClicked] = useState(false);
   useEffect(() => {
     setData(props.list);
@@ -27,12 +28,20 @@ const QuestionList = (props) => {
     setIsQuestionClicked(!isQuestionClicked);
   };
   const handleClick = (idx) => {
+    setIndex(idx);
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();
   };
   const handleYesButton = (id, aid) => {
     const data = { _id: id, _aid: aid };
     Axios.patch('/api/products/1/qna/answer/yes', data)
+      .then(() => {
+        props.getDatabase();
+      });
+  };
+  const handleNoButton = (id, aid) => {
+    const data = { _id: id, _aid: aid };
+    Axios.patch('/api/products/1/qna/answer/no', data)
       .then(() => {
         props.getDatabase();
       });
@@ -65,7 +74,7 @@ const QuestionList = (props) => {
                 <span onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
                   {`Yes. ${data.answers[0].yes}`}
                 </span>
-                <span>
+                <span onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
                   {`No. ${data.answers[0].no}`}
                 </span>
               </span>
@@ -83,6 +92,10 @@ const QuestionList = (props) => {
         toggleIsQuestionClicked={toggleIsQuestionClicked}
         currentQuestion={question}
         getDatabase={props.getDatabase}
+        handleYesButton={handleYesButton}
+        handleNoButton={handleNoButton}
+        index={index}
+        data={datas[index]}
       />
     );
   }

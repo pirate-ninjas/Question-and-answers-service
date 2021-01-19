@@ -2,11 +2,25 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AnswerForm from './AnswerForm';
 
 const PostAnswer = (props) => {
-  const { currentQuestion, getDatabase, toggleIsQuestionClicked } = props;
+  const {
+    currentQuestion, getDatabase, toggleIsQuestionClicked, data,
+  } = props;
+  const [question, setQuestion] = useState({
+    id: 'asdd',
+    user: 'asdd',
+    body: 'asdd',
+    answers: [
+      {
+        user: '', body: '', yes: 0, no: 0,
+      }],
+  });
+  useEffect(() => {
+    setQuestion(data);
+  });
   return (
     <div>
       <h3>
@@ -14,16 +28,16 @@ const PostAnswer = (props) => {
         <span onClick={toggleIsQuestionClicked}>X</span>
       </h3>
       <h3>
-        {currentQuestion.user}
+        {question.user}
         <span>4 years ago</span>
       </h3>
       <h3>
-        {currentQuestion.body}
+        {question.body}
       </h3>
       {
-        currentQuestion.answers.length > 0 && (
-          currentQuestion.answers.map((answer) => (
-            <div key={answer._id}>
+        question.answers.length > 0 && (
+          question.answers.map((answer) => (
+            <div key={`${answer._id}`}>
               <h4>
                 {answer.user}
               </h4>
@@ -32,10 +46,10 @@ const PostAnswer = (props) => {
               </h5>
               <span>
                 Helpful?
-                <span>
+                <span onClick={() => props.handleYesButton(question._id, answer._id)}>
                   {`Yes. ${answer.yes}`}
                 </span>
-                <span>
+                <span onClick={() => props.handleNoButton(question._id, answer._id)}>
                   {`No. ${answer.no}`}
                 </span>
               </span>
