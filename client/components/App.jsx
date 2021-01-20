@@ -11,19 +11,24 @@ const Wrapper = styled.section`
   padding: 10px;
 `;
 const Qna = styled.h1`
-  margin-bottom: 7%;
+  margin-bottom: 0.5em;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const AnswerButton = styled.button`
   font-size: 1em;
   margin: 1em;
-  margin-left: 70%;
+  margin-left: 75%;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border: 2px solid green;
-  border-radius: 3px;
   background: green;
   color: white;
+`;
+
+const HowManyQuestion = styled.div`
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
 `;
 const App = () => {
   const [datas, setData] = useState([]);
@@ -51,7 +56,7 @@ const App = () => {
     <Wrapper>
       <Qna>Question & Answers</Qna>
       <AnswerButton type="button" onClick={() => handleQuestionButton()}>Ask a question</AnswerButton>
-      <h3>{`1 - 10 of ${datas.length} Questions`}</h3>
+      <HowManyQuestion>{`1 - 10 of ${datas.length} Questions`}</HowManyQuestion>
       <QuestionList
         getDatabase={getDatabase}
         handleQuestionButton={handleQuestionButton}

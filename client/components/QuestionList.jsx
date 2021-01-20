@@ -11,8 +11,15 @@ import PostAnswer from './PostAnswer';
 
 const Wrapper = styled.section`
   border-top: 1px solid black;
-  padding-top: 10%;
-  padding-bottom: 10%
+  margin-top: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+`;
+const AnswerButton = styled.button`
+  font-size: 1em;
+  margin-top: 2em;
+  padding: 0.25em 0.50em;
+  border: 0.5px solid black;
 `;
 const QuestionList = (props) => {
   const [datas, setData] = useState([{
@@ -63,7 +70,7 @@ const QuestionList = (props) => {
           <h2 onClick={() => handleClick(idx)}>
             {data.body}
           </h2>
-          <button onClick={() => handleClick(idx)} type="button">Answer the Question</button>
+          <AnswerButton onClick={() => handleClick(idx)} type="button">Answer the Question</AnswerButton>
           {
             data.answers.length > 0
             && (
