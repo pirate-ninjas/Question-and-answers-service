@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
 import PostAnswer from './PostAnswer';
 
 const QuestionList = (props) => {
@@ -17,6 +19,7 @@ const QuestionList = (props) => {
       }],
   }]);
   const [question, setQuestion] = useState({});
+  const [index, setIndex] = useState(0);
   const [isQuestionClicked, setIsQuestionClicked] = useState(false);
   useEffect(() => {
     setData(props.list);
@@ -25,8 +28,23 @@ const QuestionList = (props) => {
     setIsQuestionClicked(!isQuestionClicked);
   };
   const handleClick = (idx) => {
+    setIndex(idx);
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();
+  };
+  const handleYesButton = (id, aid) => {
+    const data = { _id: id, _aid: aid };
+    Axios.patch('/api/products/1/qna/answer/yes', data)
+      .then(() => {
+        props.getDatabase();
+      });
+  };
+  const handleNoButton = (id, aid) => {
+    const data = { _id: id, _aid: aid };
+    Axios.patch('/api/products/1/qna/answer/no', data)
+      .then(() => {
+        props.getDatabase();
+      });
   };
   if (!isQuestionClicked) {
     return (
@@ -53,10 +71,10 @@ const QuestionList = (props) => {
               </h5>
               <span>
                 Helpful?
-                <span>
+                <span onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
                   {`Yes. ${data.answers[0].yes}`}
                 </span>
-                <span>
+                <span onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
                   {`No. ${data.answers[0].no}`}
                 </span>
               </span>
@@ -74,6 +92,10 @@ const QuestionList = (props) => {
         toggleIsQuestionClicked={toggleIsQuestionClicked}
         currentQuestion={question}
         getDatabase={props.getDatabase}
+        handleYesButton={handleYesButton}
+        handleNoButton={handleNoButton}
+        index={index}
+        data={datas[index]}
       />
     );
   }
