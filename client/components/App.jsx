@@ -7,7 +7,7 @@ import QuestionForm from './QuestionForm';
 
 const Wrapper = styled.section`
   margin: auto;
-  width: 50%;
+  width: 85%;
   padding: 10px;
 `;
 const Qna = styled.h1`
@@ -16,9 +16,18 @@ const Qna = styled.h1`
 `;
 
 const AnswerButton = styled.button`
+  :hover {
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 87%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border: 2px solid green;
+    background: white;
+    color: green;
+  };
   font-size: 1em;
-  margin: 1em;
-  margin-left: 75%;
+  margin-left: 87%;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border: 2px solid green;
@@ -49,7 +58,9 @@ const App = () => {
   }, [get]);
   if (isQuestionClicked) {
     return (
+      <Wrapper>
       <QuestionForm getDatabase={getDatabase} handleQuestionButton={handleQuestionButton} />
+      </Wrapper>
     );
   }
   return (
@@ -62,6 +73,11 @@ const App = () => {
         handleQuestionButton={handleQuestionButton}
         list={datas}
       />
+      {/* {
+        isQuestionClicked && (
+          <QuestionForm getDatabase={getDatabase} handleQuestionButton={handleQuestionButton} />
+        )
+      } */}
     </Wrapper>
   );
 };

@@ -16,10 +16,40 @@ const Wrapper = styled.section`
   padding-bottom: 0.5em;
 `;
 const AnswerButton = styled.button`
-  font-size: 1em;
+  font-size: 16px;
   margin-top: 2em;
+  margin-left: 1em;
   padding: 0.25em 0.50em;
-  border: 0.5px solid black;
+  border: 0.25px solid black;
+  background: white;
+  cursor: pointer;
+`;
+const BodyQuestion = styled.h2`
+  :hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+`;
+const BodyAnswer = styled.h2`
+  font-weight: normal;
+}
+`;
+const AnswerWrapper = styled.div`
+  margin-left: 1em;
+`;
+const Date = styled.span`
+  margin-left: 0.5em;
+  font-weight: normal;
+  font-size:  16px;
+`;
+const YesNoReport = styled.button`
+  font-size: 16px;
+  margin-top: 2em;
+  margin-left: 0.5em;
+  padding: 0.25em 0.50em;
+  border: 0.25px solid black;
+  background: white;
+  cursor: pointer;
 `;
 const QuestionList = (props) => {
   const [datas, setData] = useState([{
@@ -65,33 +95,33 @@ const QuestionList = (props) => {
         <Wrapper key={`${data._id}`}>
           <h3>
             {data.user}
-            <span>4 years ago </span>
+            <Date>4 years ago </Date>
           </h3>
-          <h2 onClick={() => handleClick(idx)}>
+          <BodyQuestion onClick={() => handleClick(idx)}>
             {data.body}
-          </h2>
+          </BodyQuestion>
           <AnswerButton onClick={() => handleClick(idx)} type="button">Answer the Question</AnswerButton>
           {
             data.answers.length > 0
             && (
-            <div>
-              <h4>
+            <AnswerWrapper>
+              <h3>
                 {data.answers[0].user}
-                <span>4 years ago</span>
-              </h4>
-              <h5>
+                <Date>4 years ago</Date>
+              </h3>
+              <BodyAnswer>
                 {data.answers[0].body}
-              </h5>
+              </BodyAnswer>
               <span>
                 Helpful?
-                <span onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
+                <YesNoReport onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
                   {`Yes. ${data.answers[0].yes}`}
-                </span>
-                <span onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
+                </YesNoReport>
+                <YesNoReport onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
                   {`No. ${data.answers[0].no}`}
-                </span>
+                </YesNoReport>
               </span>
-            </div>
+            </AnswerWrapper>
             )
           }
         </Wrapper>
