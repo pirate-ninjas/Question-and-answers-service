@@ -1,9 +1,30 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+import styled from 'styled-components';
 import QuestionList from './QuestionList';
 import QuestionForm from './QuestionForm';
 
+const Wrapper = styled.section`
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+`;
+const Qna = styled.h1`
+  margin-bottom: 7%;
+`;
+
+const AnswerButton = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  margin-left: 70%;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border: 2px solid green;
+  border-radius: 3px;
+  background: green;
+  color: white;
+`;
 const App = () => {
   const [datas, setData] = useState([]);
   const [isQuestionClicked, setIsQuestionClicked] = useState(false);
@@ -27,16 +48,16 @@ const App = () => {
     );
   }
   return (
-    <div>
-      <h1>Question & Answers</h1>
+    <Wrapper>
+      <Qna>Question & Answers</Qna>
+      <AnswerButton type="button" onClick={() => handleQuestionButton()}>Ask a question</AnswerButton>
       <h3>{`1 - 10 of ${datas.length} Questions`}</h3>
-      <button type="button" onClick={() => handleQuestionButton()}>Ask a question</button>
       <QuestionList
         getDatabase={getDatabase}
         handleQuestionButton={handleQuestionButton}
         list={datas}
       />
-    </div>
+    </Wrapper>
   );
 };
 export default App;

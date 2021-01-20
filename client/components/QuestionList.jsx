@@ -6,8 +6,14 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+import styled from 'styled-components';
 import PostAnswer from './PostAnswer';
 
+const Wrapper = styled.section`
+  border-top: 1px solid black;
+  padding-top: 10%;
+  padding-bottom: 10%
+`;
 const QuestionList = (props) => {
   const [datas, setData] = useState([{
     id: 'asdd',
@@ -49,7 +55,7 @@ const QuestionList = (props) => {
   if (!isQuestionClicked) {
     return (
       datas.slice(0, 10).map((data, idx) => (
-        <div key={`${data._id}`}>
+        <Wrapper key={`${data._id}`}>
           <h3>
             {data.user}
             <span>4 years ago </span>
@@ -81,7 +87,7 @@ const QuestionList = (props) => {
             </div>
             )
           }
-        </div>
+        </Wrapper>
       ))
     );
   }
@@ -94,7 +100,6 @@ const QuestionList = (props) => {
         getDatabase={props.getDatabase}
         handleYesButton={handleYesButton}
         handleNoButton={handleNoButton}
-        index={index}
         data={datas[index]}
       />
     );
