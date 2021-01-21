@@ -23,7 +23,7 @@ const LabelLeft = styled.label`
 `;
 const LabelRight = styled.label`
   font-weight: bold;
-  margin-left: 330px;
+  margin-left: 32%;
 `;
 const LabelSeperator = styled.div`
   margin-left: 1em;
@@ -39,11 +39,11 @@ const FormSeperator = styled.div`
   padding-bottom: 1em;
 `;
 const QuestionBody = styled.textarea`
-  width: 800px;
+  width: 90%;
   height: 100px;
 `;
 const FormInput = styled.input`
-  width: 400px;
+  width: 40%;
   height: 25px;
   margin-left: 1em;
   margin-top: 1em;
@@ -69,6 +69,11 @@ background: green;
 color: white;
 `;
 
+const Invalid = styled.span`
+  margin-left: 55%;
+  color: red;
+`;
+
 const AnswerForm = (props) => {
   // eslint-disable-next-line camelcase
   const { question_id } = props;
@@ -76,6 +81,7 @@ const AnswerForm = (props) => {
   const [user, setUser] = useState('');
   const [location, setLocation] = useState('');
   const [email, setEmail] = useState('');
+  const [valid, setValid] = useState(true);
   const handleClick = () => {
     const request = {
       _id: question_id,
@@ -88,17 +94,26 @@ const AnswerForm = (props) => {
     // eslint-disable-next-line no-console
     console.log(question_id);
     console.log(request);
-    Axios.post('/api/products/1/qna/answer', request)
-      .then((result) => {
-        console.log(result);
-        props.getDatabase();
-        props.toggleIsQuestionClicked();
-      });
+    if (request.body && request.user && request.email) {
+      setValid(true);
+      Axios.post('/api/products/1/qna/answer', request)
+        .then((result) => {
+          console.log(result);
+          props.getDatabase();
+          props.toggleIsQuestionClicked();
+        });
+    }
+    setValid(false);
   };
   return (
     <Wrapper>
       <Description>
         Required fields are marked with *
+        {
+        !valid && (
+          <Invalid>Please insert the required field!</Invalid>
+        )
+      }
       </Description>
       <FormSeperator>
         <LabelLeft htmlFor="body">
