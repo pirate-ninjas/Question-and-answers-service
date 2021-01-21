@@ -39,15 +39,20 @@ const HowManyQuestion = styled.div`
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
 `;
+
 const App = () => {
   const [datas, setData] = useState([]);
   const [isQuestionClicked, setIsQuestionClicked] = useState(false);
+  const [isAnswerClicked, setIsAnswerclicked] = useState(false);
   const [get, setGet] = useState(false);
   const getDatabase = () => {
     setGet(!get);
   };
   const handleQuestionButton = () => {
     setIsQuestionClicked(!isQuestionClicked);
+  };
+  const handleAnswerClicked = () => {
+    setIsAnswerclicked(!isAnswerClicked);
   };
   useEffect(() => {
     Axios.get('/api/products/1/qna')
@@ -59,7 +64,7 @@ const App = () => {
   if (isQuestionClicked) {
     return (
       <Wrapper>
-      <QuestionForm getDatabase={getDatabase} handleQuestionButton={handleQuestionButton} />
+        <QuestionForm getDatabase={getDatabase} handleQuestionButton={handleQuestionButton} />
       </Wrapper>
     );
   }
@@ -72,12 +77,8 @@ const App = () => {
         getDatabase={getDatabase}
         handleQuestionButton={handleQuestionButton}
         list={datas}
+        handleAnswerClicked={handleAnswerClicked}
       />
-      {/* {
-        isQuestionClicked && (
-          <QuestionForm getDatabase={getDatabase} handleQuestionButton={handleQuestionButton} />
-        )
-      } */}
     </Wrapper>
   );
 };

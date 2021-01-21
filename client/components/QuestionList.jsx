@@ -51,6 +51,14 @@ const YesNoReport = styled.button`
   background: white;
   cursor: pointer;
 `;
+const HowManyAnswers = styled.span`
+  margin-left: 88%;,
+  font-weight: normal;
+`;
+const Answers = styled.span`
+  margin-left: 91%;,
+  font-weight: normal;
+`;
 const QuestionList = (props) => {
   const [datas, setData] = useState([{
     id: 'asdd',
@@ -69,8 +77,10 @@ const QuestionList = (props) => {
   });
   const toggleIsQuestionClicked = () => {
     setIsQuestionClicked(!isQuestionClicked);
+    props.handleAnswerClicked();
   };
   const handleClick = (idx) => {
+    window.scrollTo({ top: 300, behavior: 'smooth' });
     setIndex(idx);
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();
@@ -96,6 +106,13 @@ const QuestionList = (props) => {
           <h3>
             {data.user}
             <Date>4 years ago </Date>
+            <Answers>
+              {data.answers.length}
+            </Answers>
+            <br />
+            <HowManyAnswers>
+              Answers
+            </HowManyAnswers>
           </h3>
           <BodyQuestion onClick={() => handleClick(idx)}>
             {data.body}
