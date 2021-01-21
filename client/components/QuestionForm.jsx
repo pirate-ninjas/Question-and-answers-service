@@ -5,7 +5,91 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import Axios from 'axios';
+import styled from 'styled-components';
 
+const Wrapper = styled.section`
+  margin-top: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+`;
+const Xbutton = styled.button`
+  :hover {
+    cursor: pointer;
+  };
+  background-color: gray;
+  border: none;
+  color: white;
+  padding: 7px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 100%;
+  border-radius: 50%;
+`;
+const Title = styled.h3`
+  font-weight: normal;
+`;
+const Description = styled.h5`
+  font-weight: normal;
+  margin-left: 1em;
+`;
+const DescriptionSpan = styled.span`
+  font-weight: normal;
+  margin-left: 1em;
+`;
+const LabelLeft = styled.label`
+  font-weight: bold;
+  margin-left: 1em;
+`;
+const LabelRight = styled.label`
+  font-weight: bold;
+  margin-left: 330px;
+`;
+const LabelSeperator = styled.div`
+  margin-left: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+`;
+
+const FormSeperator = styled.div`
+  border-top: 0.5px solid black;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+`;
+const QuestionBody = styled.textarea`
+  width: 1000px;
+  height: 100px;
+`;
+const FormInput = styled.input`
+  width: 400px;
+  height: 25px;
+  margin-left: 1em;
+  margin-top: 1em;
+`;
+
+const Submit = styled.button`
+:hover {
+  cursor: pointer;
+  font-size: 1em;
+  margin-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border: 2px solid green;
+  background: white;
+  color: green;
+};
+font-size: 1em;
+margin-left: 1em;
+padding-top: 0.5em;
+padding-bottom: 0.5em;
+border: 2px solid green;
+background: green;
+color: white;
+`;
 const QuestionForm = (props) => {
   const [body, setBody] = useState('');
   const [user, setUser] = useState('');
@@ -29,37 +113,74 @@ const QuestionForm = (props) => {
       });
   };
   return (
-    <div>
-      <label htmlFor="body">
-        Question
-        <span onClick={props.handleQuestionButton}>X</span>
-        <textarea name="body" value={body} onChange={(e) => setBody(e.target.value)} />
-      </label>
-      <br />
-      <label htmlFor="nickname">
-        Nickname*
-        <input type="text" name="user" value={user} onChange={(e) => setUser(e.target.value)} />
-      </label>
-      <br />
-      <label htmlFor="location">
-        Location
-        <input type="text" name="location" value={location} onChange={(e) => setLocation(e.target.value)} />
-      </label>
-      <br />
-      <label htmlFor="email">
-        Email*
-        <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </label>
-      <br />
-      <label htmlFor="agree">
-        <input type="checkbox" name="agree" value="agree" />
-        I agree to the terms & conditions
-      </label>
-      <br />
-      <button type="button" onClick={() => handleClick()}>
+    <Wrapper>
+      <Title>
+        Ask a Question
+        <Xbutton onClick={props.handleQuestionButton}>X</Xbutton>
+      </Title>
+      <Description>
+        Required fields are marked with *
+      </Description>
+      <FormSeperator>
+        <LabelLeft htmlFor="body">
+          Question*
+          <DescriptionSpan>Maximum of 255 characters.</DescriptionSpan>
+          <LabelSeperator>
+            <QuestionBody
+              name="body"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              placeholder="Ask a question..."
+            />
+          </LabelSeperator>
+        </LabelLeft>
+      </FormSeperator>
+      <FormSeperator>
+        <LabelLeft htmlFor="nickname">
+          Nickname*
+        </LabelLeft>
+        <LabelRight htmlFor="location">
+          Location
+        </LabelRight>
+        <br />
+        <FormInput
+          type="text"
+          name="user"
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
+          placeholder="Example: jacky123"
+        />
+        <FormInput
+          type="text"
+          name="location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          placeholder="Example: Seattle,WA"
+        />
+      </FormSeperator>
+      <FormSeperator>
+        <LabelLeft htmlFor="email">
+          Email*
+          <br />
+          <FormInput
+            type="text"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Example: youremail@gmail.com"
+          />
+        </LabelLeft>
+      </FormSeperator>
+      <FormSeperator>
+        <label htmlFor="agree">
+          <input type="checkbox" name="agree" value="agree" />
+          I agree to the terms & conditions
+        </label>
+      </FormSeperator>
+      <Submit type="button" onClick={() => handleClick()}>
         Post a Question
-      </button>
-    </div>
+      </Submit>
+    </Wrapper>
   );
 };
 

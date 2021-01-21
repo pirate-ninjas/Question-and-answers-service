@@ -6,8 +6,59 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+import styled from 'styled-components';
 import PostAnswer from './PostAnswer';
 
+const Wrapper = styled.section`
+  border-top: 1px solid black;
+  margin-top: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+`;
+const AnswerButton = styled.button`
+  font-size: 16px;
+  margin-top: 2em;
+  margin-left: 1em;
+  padding: 0.25em 0.50em;
+  border: 0.25px solid black;
+  background: white;
+  cursor: pointer;
+`;
+const BodyQuestion = styled.h2`
+  :hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+`;
+const BodyAnswer = styled.h2`
+  font-weight: normal;
+}
+`;
+const AnswerWrapper = styled.div`
+  margin-left: 1em;
+`;
+const Date = styled.span`
+  margin-left: 0.5em;
+  font-weight: normal;
+  font-size:  16px;
+`;
+const YesNoReport = styled.button`
+  font-size: 16px;
+  margin-top: 2em;
+  margin-left: 0.5em;
+  padding: 0.25em 0.50em;
+  border: 0.25px solid black;
+  background: white;
+  cursor: pointer;
+`;
+const HowManyAnswers = styled.span`
+  margin-left: 88%;,
+  font-weight: normal;
+`;
+const Answers = styled.span`
+  margin-left: 91%;,
+  font-weight: normal;
+`;
 const QuestionList = (props) => {
   const [datas, setData] = useState([{
     id: 'asdd',
@@ -26,8 +77,10 @@ const QuestionList = (props) => {
   });
   const toggleIsQuestionClicked = () => {
     setIsQuestionClicked(!isQuestionClicked);
+    props.handleAnswerClicked();
   };
   const handleClick = (idx) => {
+    window.scrollTo({ top: 300, behavior: 'smooth' });
     setIndex(idx);
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();
@@ -49,39 +102,46 @@ const QuestionList = (props) => {
   if (!isQuestionClicked) {
     return (
       datas.slice(0, 10).map((data, idx) => (
-        <div key={`${data._id}`}>
+        <Wrapper key={`${data._id}`}>
           <h3>
             {data.user}
-            <span>4 years ago </span>
+            <Date>4 years ago </Date>
+            <Answers>
+              {data.answers.length}
+            </Answers>
+            <br />
+            <HowManyAnswers>
+              Answers
+            </HowManyAnswers>
           </h3>
-          <h2 onClick={() => handleClick(idx)}>
+          <BodyQuestion onClick={() => handleClick(idx)}>
             {data.body}
-          </h2>
-          <button onClick={() => handleClick(idx)} type="button">Answer the Question</button>
+          </BodyQuestion>
+          <AnswerButton onClick={() => handleClick(idx)} type="button">Answer the Question</AnswerButton>
           {
             data.answers.length > 0
             && (
-            <div>
-              <h4>
+            <AnswerWrapper>
+              <h3>
                 {data.answers[0].user}
-                <span>4 years ago</span>
-              </h4>
-              <h5>
+                <Date>4 years ago</Date>
+              </h3>
+              <BodyAnswer>
                 {data.answers[0].body}
-              </h5>
+              </BodyAnswer>
               <span>
                 Helpful?
-                <span onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
+                <YesNoReport onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
                   {`Yes. ${data.answers[0].yes}`}
-                </span>
-                <span onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
+                </YesNoReport>
+                <YesNoReport onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
                   {`No. ${data.answers[0].no}`}
-                </span>
+                </YesNoReport>
               </span>
-            </div>
+            </AnswerWrapper>
             )
           }
-        </div>
+        </Wrapper>
       ))
     );
   }
@@ -94,7 +154,6 @@ const QuestionList = (props) => {
         getDatabase={props.getDatabase}
         handleYesButton={handleYesButton}
         handleNoButton={handleNoButton}
-        index={index}
         data={datas[index]}
       />
     );
