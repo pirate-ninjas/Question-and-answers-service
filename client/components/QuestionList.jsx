@@ -1,64 +1,27 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-console */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import styled from 'styled-components';
+import moment from 'moment';
+import QuestionListStyle from './style/QuestionList';
 import PostAnswer from './PostAnswer';
 
-const Wrapper = styled.section`
-  border-top: 1px solid black;
-  margin-top: 1em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-`;
-const AnswerButton = styled.button`
-  font-size: 16px;
-  margin-top: 2em;
-  margin-left: 1em;
-  padding: 0.25em 0.50em;
-  border: 0.25px solid black;
-  background: white;
-  cursor: pointer;
-`;
-const BodyQuestion = styled.h2`
-  :hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-`;
-const BodyAnswer = styled.h2`
-  font-weight: normal;
-}
-`;
-const AnswerWrapper = styled.div`
-  margin-left: 1em;
-`;
-const Date = styled.span`
-  margin-left: 0.5em;
-  font-weight: normal;
-  font-size:  16px;
-`;
-const YesNoReport = styled.button`
-  font-size: 16px;
-  margin-top: 2em;
-  margin-left: 0.5em;
-  padding: 0.25em 0.50em;
-  border: 0.25px solid black;
-  background: white;
-  cursor: pointer;
-`;
-const HowManyAnswers = styled.span`
-  margin-left: 88%;,
-  font-weight: normal;
-`;
-const Answers = styled.span`
-  margin-left: 91%;,
-  font-weight: normal;
-`;
+const {
+  Wrapper,
+  AnswerButton,
+  BodyQuestion,
+  BodyAnswer,
+  AnswerWrapper,
+  Date,
+  YesReport,
+  HowManyAnswers,
+  Answers,
+  NoReport,
+} = QuestionListStyle;
+
 const QuestionList = (props) => {
   const [datas, setData] = useState([{
     id: 'asdd',
@@ -80,6 +43,7 @@ const QuestionList = (props) => {
     props.handleAnswerClicked();
   };
   const handleClick = (idx) => {
+    // I need to know the exact coordinate on proxy
     window.scrollTo({ top: 300, behavior: 'smooth' });
     setIndex(idx);
     setQuestion(datas[idx]);
@@ -90,6 +54,8 @@ const QuestionList = (props) => {
     Axios.patch('/api/products/1/qna/answer/yes', data)
       .then(() => {
         props.getDatabase();
+        document.getElementById(`yes ${aid}`).setAttribute('disabled', 'true');
+        document.getElementById(`no ${aid}`).setAttribute('disabled', 'true');
       });
   };
   const handleNoButton = (id, aid) => {
@@ -97,15 +63,17 @@ const QuestionList = (props) => {
     Axios.patch('/api/products/1/qna/answer/no', data)
       .then(() => {
         props.getDatabase();
+        document.getElementById(`no ${aid}`).setAttribute('disabled', 'true');
+        document.getElementById(`yes ${aid}`).setAttribute('disabled', 'true');
       });
   };
-  if (!isQuestionClicked) {
+  if (!isQuestionClicked && !props.Load) {
     return (
       datas.slice(0, 10).map((data, idx) => (
         <Wrapper key={`${data._id}`}>
           <h3>
             {data.user}
-            <Date>4 years ago </Date>
+            <Date>{moment(data.createdAt).fromNow()}</Date>
             <Answers>
               {data.answers.length}
             </Answers>
@@ -124,19 +92,69 @@ const QuestionList = (props) => {
             <AnswerWrapper>
               <h3>
                 {data.answers[0].user}
-                <Date>4 years ago</Date>
+                <Date>{moment(data.answers[0].createdAt).fromNow()}</Date>
               </h3>
               <BodyAnswer>
                 {data.answers[0].body}
               </BodyAnswer>
               <span>
                 Helpful?
-                <YesNoReport onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
-                  {`Yes. ${data.answers[0].yes}`}
-                </YesNoReport>
-                <YesNoReport onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
-                  {`No. ${data.answers[0].no}`}
-                </YesNoReport>
+                <span>Yes. </span>
+                <YesReport id={`yes ${data.answers[0]._id}`} onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
+                  {`${data.answers[0].yes}`}
+                </YesReport>
+                <span>No. </span>
+                <NoReport id={`no ${data.answers[0]._id}`} onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
+                  {`${data.answers[0].no}`}
+                </NoReport>
+              </span>
+            </AnswerWrapper>
+            )
+          }
+        </Wrapper>
+      ))
+    );
+  }
+  if (!isQuestionClicked && props.Load) {
+    return (
+      datas.map((data, idx) => (
+        <Wrapper key={`${data._id}`}>
+          <h3>
+            {data.user}
+            <Date>{moment(data.createdAt).fromNow()}</Date>
+            <Answers>
+              {data.answers.length}
+            </Answers>
+            <br />
+            <HowManyAnswers>
+              Answers
+            </HowManyAnswers>
+          </h3>
+          <BodyQuestion onClick={() => handleClick(idx)}>
+            {data.body}
+          </BodyQuestion>
+          <AnswerButton onClick={() => handleClick(idx)} type="button">Answer the Question</AnswerButton>
+          {
+            data.answers.length > 0
+            && (
+            <AnswerWrapper>
+              <h3>
+                {data.answers[0].user}
+                <Date>{moment(data.answers[0].createdAt).fromNow()}</Date>
+              </h3>
+              <BodyAnswer>
+                {data.answers[0].body}
+              </BodyAnswer>
+              <span>
+                Helpful?
+                <span>Yes. </span>
+                <YesReport id={`yes ${data.answers[0]._id}`} onClick={() => handleYesButton(data._id, data.answers[0]._id)}>
+                  {`${data.answers[0].yes}`}
+                </YesReport>
+                <span>No. </span>
+                <NoReport id={`no ${data.answers[0]._id}`} onClick={() => handleNoButton(data._id, data.answers[0]._id)}>
+                  {`${data.answers[0].no}`}
+                </NoReport>
               </span>
             </AnswerWrapper>
             )
