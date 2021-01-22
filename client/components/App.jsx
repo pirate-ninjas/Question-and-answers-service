@@ -78,18 +78,34 @@ const App = () => {
     <Wrapper>
       <Qna>Question & Answers</Qna>
       <AnswerButton type="button" onClick={() => handleQuestionButton()}>Ask a question</AnswerButton>
-      <HowManyQuestion>
-        {`1 - 10 of ${datas.length} Questions`}
-        <SortSpan>
-          <span>Sort by: </span>
-          <select onChange={handleSort} name="sort">
-            <option value="newest-question">Newests Question</option>
-            <option value="most-answered">Most Answered</option>
-            <option value="answer-needed">Answer Needed</option>
-            <option value="most-helpful-answers">Most helpful answers</option>
-          </select>
-        </SortSpan>
-      </HowManyQuestion>
+      {loadMore && (
+        <HowManyQuestion>
+            {`1 - ${datas.length} Questions`}
+          <SortSpan>
+            <span>Sort by: </span>
+            <select onChange={handleSort} name="sort">
+              <option value="newest-question">Newests Question</option>
+              <option value="most-answered">Most Answered</option>
+              <option value="answer-needed">Answer Needed</option>
+              <option value="most-helpful-answers">Most helpful answers</option>
+            </select>
+          </SortSpan>
+        </HowManyQuestion>
+      )}
+      {!loadMore && (
+        <HowManyQuestion>
+          {`1 - 10 of ${datas.length} Questions`}
+          <SortSpan>
+            <span>Sort by: </span>
+            <select onChange={handleSort} name="sort">
+              <option value="newest-question">Newests Question</option>
+              <option value="most-answered">Most Answered</option>
+              <option value="answer-needed">Answer Needed</option>
+              <option value="most-helpful-answers">Most helpful answers</option>
+            </select>
+          </SortSpan>
+        </HowManyQuestion>
+      )}
       <QuestionList
         getDatabase={getDatabase}
         handleQuestionButton={handleQuestionButton}
@@ -98,7 +114,7 @@ const App = () => {
         Load={loadMore}
       />
       {
-        !isAnswerClicked && (
+        !isAnswerClicked && !loadMore && (
           <LoadButton
             id="loadmorebutton"
             type="button"
