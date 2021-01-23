@@ -172,7 +172,7 @@ const AnswerForm = (props) => {
         </label>
       </FormSeperator>
       <Submit type="button" onClick={() => handleClick()}>
-        Post a Question
+        Post Answer
       </Submit>
     </Wrapper>
   );

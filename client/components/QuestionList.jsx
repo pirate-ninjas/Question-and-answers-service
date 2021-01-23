@@ -44,7 +44,9 @@ const QuestionList = (props) => {
   };
   const handleClick = (idx) => {
     // I need to know the exact coordinate on proxy
-    window.scrollTo({ top: 300, behavior: 'smooth' });
+    if (!props.test) {
+      window.scrollTo({ top: 300, behavior: 'smooth' });
+    }
     setIndex(idx);
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();
@@ -56,7 +58,8 @@ const QuestionList = (props) => {
         props.getDatabase();
         document.getElementById(`yes ${aid}`).setAttribute('disabled', 'true');
         document.getElementById(`no ${aid}`).setAttribute('disabled', 'true');
-      });
+      })
+      .catch((err) => console.log(err));
   };
   const handleNoButton = (id, aid) => {
     const data = { _id: id, _aid: aid };
@@ -65,7 +68,8 @@ const QuestionList = (props) => {
         props.getDatabase();
         document.getElementById(`no ${aid}`).setAttribute('disabled', 'true');
         document.getElementById(`yes ${aid}`).setAttribute('disabled', 'true');
-      });
+      })
+      .catch((err) => console.log(err));
   };
   if (!isQuestionClicked && !props.Load) {
     return (
