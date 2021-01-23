@@ -14,7 +14,6 @@ describe('App', () => {
     expect(screen.getByText('Question & Answers')).toBeInTheDocument();
     expect(screen.getByText('Ask a question')).toBeInTheDocument();
     expect(screen.getByText('Load More')).toBeInTheDocument();
-    screen.debug();
   });
   test('It should render Question form correctly when the Ask A question button is clicked', () => {
     fireEvent.click(screen.getByText('Ask a question'));

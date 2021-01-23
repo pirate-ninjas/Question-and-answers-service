@@ -23,6 +23,7 @@ const App = (props) => {
   const [get, setGet] = useState(false);
   const [sort, setSort] = useState('newest-question');
   const [loadMore, setLoadMore] = useState(false);
+  const [dataLoading, setdataLoading] = useState(true);
   const getDatabase = () => {
     setGet(!get);
   };
@@ -45,12 +46,13 @@ const App = (props) => {
   useEffect(() => {
     if (props.test === true) {
       setData(props.testData);
+      setdataLoading(false);
     }
     if (sort === 'newest-question' && !props.test) {
       Axios.get('/api/products/1/qna')
         .then((res) => {
           setData(res.data);
-          console.log(res.data);
+          setdataLoading(false);
         })
         .catch((err) => console.log(err));
     }
@@ -60,6 +62,7 @@ const App = (props) => {
           let currentData = [...res.data];
           currentData = currentData.sort((a, b) => b.answers.length - a.answers.length);
           setData(currentData);
+          setdataLoading(false);
           console.log(currentData);
         })
         .catch((err) => console.log(err));
@@ -70,11 +73,17 @@ const App = (props) => {
           let currentData = [...res.data];
           currentData = currentData.sort((a, b) => a.answers.length - b.answers.length);
           setData(currentData);
+          setdataLoading(false);
           console.log(currentData);
         })
         .catch((err) => console.log(err));
     }
   }, [get]);
+  if (dataLoading) {
+    return (
+      <div>Loading ...</div>
+    );
+  }
   if (isQuestionClicked) {
     return (
       <Wrapper>

@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 import React from 'react';
-// import axios from 'axios';
 import '@babel/polyfill';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/';
@@ -13,7 +12,7 @@ import fakeData from './fakeData';
 describe('QuestionList', () => {
   beforeEach(() => {
     const test = true;
-    render(<QuestionList test={test} list={fakeData} handleAnswerClicked={() => console.log('Please ignore the window scrollto error log')} />);
+    render(<QuestionList test={test} list={fakeData} handleAnswerClicked={() => console.log('If you see this, this test is most likely working!')} />);
   });
   test('Should render the QuestionList with the correct props', () => {
     expect(screen.getByText('CloverJoy')).toBeInTheDocument();
@@ -30,13 +29,3 @@ describe('QuestionList', () => {
     expect(screen.getByText('Required fields are marked with *')).toBeInTheDocument();
   });
 });
-
-// it('should render please', async () => {
-//   axios.get('/api/products/3/qna')
-//     .then((res) => {
-//       const { data } = res.data;
-//       render(<QuestionList />);
-//       screen.debug();
-//     })
-//     .catch(()=> console.log('cannot get the data'));
-// });
