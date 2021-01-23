@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
@@ -14,7 +16,7 @@ const {
   LoadButton,
 } = AppStyle;
 
-const App = () => {
+const App = (props) => {
   const [datas, setData] = useState([]);
   const [isQuestionClicked, setIsQuestionClicked] = useState(false);
   const [isAnswerClicked, setIsAnswerclicked] = useState(false);
@@ -41,30 +43,36 @@ const App = () => {
     setLoadMore(true);
   };
   useEffect(() => {
-    if (sort === 'newest-question') {
+    if (props.test === true) {
+      setData(props.testData);
+    }
+    if (sort === 'newest-question' && !props.test) {
       Axios.get('/api/products/1/qna')
         .then((res) => {
           setData(res.data);
           console.log(res.data);
-        });
+        })
+        .catch((err) => console.log(err));
     }
-    if (sort === 'most-answered' || sort === 'most-helpful-answers') {
+    if ((sort === 'most-answered' || sort === 'most-helpful-answers') && !props.test) {
       Axios.get('/api/products/1/qna')
         .then((res) => {
           let currentData = [...res.data];
           currentData = currentData.sort((a, b) => b.answers.length - a.answers.length);
           setData(currentData);
           console.log(currentData);
-        });
+        })
+        .catch((err) => console.log(err));
     }
-    if (sort === 'answer-needed') {
+    if (sort === 'answer-needed' && !props.test) {
       Axios.get('/api/products/1/qna')
         .then((res) => {
           let currentData = [...res.data];
           currentData = currentData.sort((a, b) => a.answers.length - b.answers.length);
           setData(currentData);
           console.log(currentData);
-        });
+        })
+        .catch((err) => console.log(err));
     }
   }, [get]);
   if (isQuestionClicked) {
@@ -112,6 +120,7 @@ const App = () => {
         list={datas}
         handleAnswerClicked={handleAnswerClicked}
         Load={loadMore}
+        test={props.test || false}
       />
       {
         !isAnswerClicked && !loadMore && (

@@ -1,47 +1,33 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 import React from 'react';
 // import axios from 'axios';
 import '@babel/polyfill';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/';
 import QuestionList from '../QuestionList';
+import fakeData from './fakeData';
 
 // jest.mock('axios');
 
 describe('QuestionList', () => {
   beforeEach(() => {
-    const fakeData = [
-      {
-        _id: '6009e570c7ae5b11e67db791',
-        questionid: 1,
-        user: 'CloverJoy',
-        location: '',
-        email: 'email@email.com',
-        body: 'asdd',
-        answers: [],
-        createdAt: '2021-01-21T20:34:56.184Z',
-        updatedAt: '2021-01-21T20:34:56.184Z',
-        __v: 0,
-      },
-      {
-        _id: '6009e22da50c18117e7bb492',
-        questionid: 1,
-        user: 'Another CloverJoy',
-        location: '',
-        email: 'email@email.com',
-        body: 'This is the question',
-        answers: [],
-        createdAt: '2021-01-21T20:21:01.094Z',
-        updatedAt: '2021-01-21T20:21:01.094Z',
-        __v: 0,
-      },
-    ];
-    render(<QuestionList list={fakeData} />);
+    const test = true;
+    render(<QuestionList test={test} list={fakeData} handleAnswerClicked={() => console.log('Please ignore the window scrollto error log')} />);
   });
-  test('Should render the QuestionList with the correct props', async () => {
+  test('Should render the QuestionList with the correct props', () => {
     expect(screen.getByText('CloverJoy')).toBeInTheDocument();
     expect(screen.getByText('Another CloverJoy')).toBeInTheDocument();
     expect(screen.getByText('This is the question')).toBeInTheDocument();
+  });
+  test('When a question is clicked, it should render the PostAnswer section with the following question', () => {
+    fireEvent.click(screen.getByText('asdd'));
+    expect(screen.getByText('CloverJoy')).toBeInTheDocument();
+    expect(screen.getByText('Required fields are marked with *')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('X'));
+    fireEvent.click(screen.getByText('This is the question'));
+    expect(screen.getByText('Another CloverJoy')).toBeInTheDocument();
+    expect(screen.getByText('Required fields are marked with *')).toBeInTheDocument();
   });
 });
 
