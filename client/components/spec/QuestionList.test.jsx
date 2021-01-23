@@ -41,6 +41,7 @@ describe('QuestionList', () => {
   test('Should render the QuestionList with the correct props', async () => {
     expect(screen.getByText('CloverJoy')).toBeInTheDocument();
     expect(screen.getByText('Another CloverJoy')).toBeInTheDocument();
+    expect(screen.getByText('This is the question')).toBeInTheDocument();
   });
 });
 
