@@ -14,7 +14,7 @@ app.get('/api/products/:id/qna', (req, res) => {
   Qna.find({ questionid: { $lte: questionid + 10, $gte: questionid } }).sort({ questionid: 1 })
     .sort({ createdAt: -1 })
     .then((result) => {
-      console.log(result);
+      console.log('GET request fired!');
       res.send(result);
     });
 });
@@ -31,6 +31,7 @@ app.post('/api/products/:id/qna', (req, res) => {
       })
         .then((created) => {
           console.log(created);
+          console.log('new data created!');
           res.send(created);
         });
     });
@@ -48,6 +49,7 @@ app.post('/api/products/:id/qna/answer', (req, res) => {
       result.save()
         .then((created) => {
           console.log(created);
+          console.log('new data created!');
           res.send(created);
         })
         .catch((err) => console.log(err));
