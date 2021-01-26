@@ -17,7 +17,7 @@ app.get('/api/products/:id/qna', (req, res) => {
       console.log('GET request fired!');
       res.send(result);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.send(err));
 });
 
 app.post('/api/products/:id/qna', (req, res) => {
@@ -34,8 +34,10 @@ app.post('/api/products/:id/qna', (req, res) => {
           console.log(created);
           console.log('new data created!');
           res.send(created);
-        });
-    });
+        })
+        .catch((err) => res.send(err));
+    })
+    .catch((err) => res.send(err));
 });
 
 app.post('/api/products/:id/qna/answer', (req, res) => {
@@ -53,9 +55,9 @@ app.post('/api/products/:id/qna/answer', (req, res) => {
           console.log('new data created!');
           res.send(created);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => res.send(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.send(err));
 });
 
 app.patch('/api/products/:id/qna/answer/yes', (req, res) => {
@@ -69,7 +71,7 @@ app.patch('/api/products/:id/qna/answer/yes', (req, res) => {
       result.save();
       res.send(result.answers.id(_aid));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.send(err));
 });
 
 app.patch('/api/products/:id/qna/answer/no', (req, res) => {
@@ -83,7 +85,7 @@ app.patch('/api/products/:id/qna/answer/no', (req, res) => {
       result.save();
       res.send(result.answers.id(_aid));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.send(err));
 });
 
 app.listen(port, () => {
