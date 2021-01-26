@@ -3,7 +3,7 @@
 const express = require('express');
 
 const app = express();
-const port = 3000;
+const port = 4000;
 const Qna = require('../database/mongodb.js');
 
 app.use(express.static('public'));
@@ -16,7 +16,8 @@ app.get('/api/products/:id/qna', (req, res) => {
     .then((result) => {
       console.log('GET request fired!');
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post('/api/products/:id/qna', (req, res) => {

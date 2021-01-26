@@ -24,6 +24,7 @@ const App = (props) => {
   const [sort, setSort] = useState('newest-question');
   const [loadMore, setLoadMore] = useState(false);
   const [dataLoading, setdataLoading] = useState(true);
+  const [productId, setProductId] = useState(1);
   const getDatabase = () => {
     setGet(!get);
   };
@@ -44,12 +45,14 @@ const App = (props) => {
     setLoadMore(true);
   };
   useEffect(() => {
+    // This code below is to change the productid for the apicall params
+    // setProductId('INSERT ANY NUMBER OR THE DEFAULT IS 1');
     if (props.test === true) {
       setData(props.testData);
       setdataLoading(false);
     }
     if (sort === 'newest-question' && !props.test) {
-      Axios.get('/api/products/1/qna')
+      Axios.get(`/api/products/${productId}/qna`)
         .then((res) => {
           setData(res.data);
           setdataLoading(false);
@@ -57,7 +60,7 @@ const App = (props) => {
         .catch((err) => console.log(err));
     }
     if ((sort === 'most-answered' || sort === 'most-helpful-answers') && !props.test) {
-      Axios.get('/api/products/1/qna')
+      Axios.get(`/api/products/${productId}/qna`)
         .then((res) => {
           let currentData = [...res.data];
           currentData = currentData.sort((a, b) => b.answers.length - a.answers.length);
@@ -68,7 +71,7 @@ const App = (props) => {
         .catch((err) => console.log(err));
     }
     if (sort === 'answer-needed' && !props.test) {
-      Axios.get('/api/products/1/qna')
+      Axios.get(`/api/products/${productId}/qna`)
         .then((res) => {
           let currentData = [...res.data];
           currentData = currentData.sort((a, b) => a.answers.length - b.answers.length);
