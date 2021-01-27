@@ -37,7 +37,7 @@ const PostAnswerStyle = {
   margin-left: 0.5em;
 `,
   AnswerBody: styled.h3`
-  font-weight: lighter;
+  font-weight: normal;
 `,
   AnswerWrapper: styled.div`
   margin-left: 1em;
