@@ -54,18 +54,16 @@ const Submit = styled.button`
   cursor: pointer;
   font-size: 1em;
   margin-left: 1em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding: 0.7em;
   border: 2px solid green;
-  background: white;
+  background: #c7dfd1;
   color: green;
 };
 font-size: 1em;
 margin-left: 1em;
-padding-top: 0.5em;
-padding-bottom: 0.5em;
+padding: 0.7em;
 border: 2px solid green;
-background: green;
+background: #225c4e;
 color: white;
 `;
 

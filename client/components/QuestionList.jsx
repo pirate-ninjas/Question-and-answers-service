@@ -44,9 +44,9 @@ const QuestionList = (props) => {
   };
   const handleClick = (idx) => {
     // I need to know the exact coordinate on proxy
-    // if (!props.test) {
-    //   window.scrollTo({ top: 300, behavior: 'smooth' });
-    // }
+    if (!props.test) {
+      window.scrollTo({ top: 3500, behavior: 'smooth' });
+    }
     setIndex(idx);
     setQuestion(datas[idx]);
     toggleIsQuestionClicked();

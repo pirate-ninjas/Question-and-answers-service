@@ -15,19 +15,15 @@ const AppStyle = {
     cursor: pointer;
     font-size: 1em;
     margin-left: 87%;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    border: 2px solid green;
-    background: white;
+    padding: 0.7em;
+    background: #c7dfd1;
     color: green;
   };
   font-size: 1em;
   margin-left: 87%;
   margin-bottom: 1em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border: 2px solid green;
-  background: green;
+  padding: 0.7em;
+  background: #225c4e;
   color: white;
 `,
   SortSpan: styled.span`
