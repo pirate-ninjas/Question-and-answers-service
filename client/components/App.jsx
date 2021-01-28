@@ -7,6 +7,8 @@ import Axios from 'axios';
 import AppStyle from './style/App';
 import QuestionList from './QuestionList';
 import QuestionForm from './QuestionForm';
+import Footer from './Footer';
+import BlackFooter from './BlackFooter';
 
 const {
   Wrapper,
@@ -96,10 +98,11 @@ const App = (props) => {
     );
   }
   return (
-    <Wrapper>
-      <Qna>Question & Answers</Qna>
-      <AnswerButton type="button" onClick={() => handleQuestionButton()}>Ask a question</AnswerButton>
-      {loadMore && (
+    <div>
+      <Wrapper>
+        <Qna>Question & Answers</Qna>
+        <AnswerButton type="button" onClick={() => handleQuestionButton()}>Ask a question</AnswerButton>
+        {loadMore && (
         <HowManyQuestion>
             {`1 - ${datas.length} Questions`}
           <SortSpan>
@@ -112,8 +115,8 @@ const App = (props) => {
             </select>
           </SortSpan>
         </HowManyQuestion>
-      )}
-      {!loadMore && (
+        )}
+        {!loadMore && (
         <HowManyQuestion>
           {`1 - 10 of ${datas.length} Questions`}
           <SortSpan>
@@ -126,16 +129,16 @@ const App = (props) => {
             </select>
           </SortSpan>
         </HowManyQuestion>
-      )}
-      <QuestionList
-        getDatabase={getDatabase}
-        handleQuestionButton={handleQuestionButton}
-        list={datas}
-        handleAnswerClicked={handleAnswerClicked}
-        Load={loadMore}
-        test={props.test || false}
-      />
-      {
+        )}
+        <QuestionList
+          getDatabase={getDatabase}
+          handleQuestionButton={handleQuestionButton}
+          list={datas}
+          handleAnswerClicked={handleAnswerClicked}
+          Load={loadMore}
+          test={props.test || false}
+        />
+        {
         !isAnswerClicked && !loadMore && (
           <LoadButton
             id="loadmorebutton"
@@ -146,7 +149,10 @@ const App = (props) => {
           </LoadButton>
         )
       }
-    </Wrapper>
+        <Footer />
+      </Wrapper>
+      <BlackFooter />
+    </div>
   );
 };
 export default App;
