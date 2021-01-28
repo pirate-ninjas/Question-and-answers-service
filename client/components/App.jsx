@@ -9,6 +9,7 @@ import QuestionList from './QuestionList';
 import QuestionForm from './QuestionForm';
 import Footer from './Footer';
 import BlackFooter from './BlackFooter';
+import fakeData from './spec/fakeData';
 
 const {
   Wrapper,
@@ -20,7 +21,7 @@ const {
 } = AppStyle;
 
 const App = (props) => {
-  const [datas, setData] = useState([]);
+  const [datas, setData] = useState(fakeData);
   const [isQuestionClicked, setIsQuestionClicked] = useState(false);
   const [isAnswerClicked, setIsAnswerclicked] = useState(false);
   const [get, setGet] = useState(false);
@@ -57,7 +58,10 @@ const App = (props) => {
     if (sort === 'newest-question' && !props.test) {
       Axios.get(`/api/products/${productId}/qna`)
         .then((res) => {
-          setData(res.data);
+          if (res.data.length !== 0) {
+            setData(res.data);
+            setdataLoading(false);
+          }
           setdataLoading(false);
         })
         .catch((err) => console.log(err));

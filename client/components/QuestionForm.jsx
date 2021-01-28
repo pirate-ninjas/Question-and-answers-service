@@ -111,7 +111,7 @@ const QuestionForm = (props) => {
       console.log(request);
       Axios.post('/api/products/1/qna', request)
         .then((result) => {
-          console.log(result);
+          console.log(result.data);
           props.getDatabase();
           props.handleQuestionButton();
         });

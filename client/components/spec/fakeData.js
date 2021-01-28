@@ -48,6 +48,31 @@ const fakeData = [
     updatedAt: '2021-01-21T20:34:56.184Z',
     _v: 0,
   },
+  {
+    _id: '6009e570c7ae5b11e67db79112342',
+    questionid: 2,
+    user: 'Sample Data',
+    location: '',
+    email: 'email@email.com',
+    body: 'So this is for the test',
+    answers: [
+      {
+        _id: '6009e570c7ae5b11e67db791',
+        questionid: 1,
+        user: 'AnotherBilly',
+        location: '',
+        email: 'email@email.com',
+        body: 'asddddd',
+        yes: 1,
+        no: 1,
+        createdAt: '2021-01-21T20:34:56.184Z',
+        updatedAt: '2021-01-21T20:34:56.184Z',
+
+      }],
+    createdAt: '2021-01-21T20:34:56.184Z',
+    updatedAt: '2021-01-21T20:34:56.184Z',
+    _v: 0,
+  },
 ];
 
 export default fakeData;

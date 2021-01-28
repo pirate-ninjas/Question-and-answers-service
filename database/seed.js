@@ -7,7 +7,7 @@ const Qna = require('./mongodb.js');
 const fakeDatas = [];
 
 let id = 0;
-for (let i = 0; i < 100; i += 1) {
+for (let i = 0; i <= 100; i += 1) {
   const randomName = faker.name.findName();
   const randomLocation = `${faker.address.state()} ${faker.address.zipCodeByState()}`;
   const randomEmail = faker.internet.email();
