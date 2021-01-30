@@ -10,3 +10,17 @@ services:
 
   database:
     image: mongo:latest
+
+# yml for docker
+# version: '3.1'
+
+# services:
+#   database:
+#     image: mongo:latest
+
+#   server:
+#     image: cloverjoy/qna
+#     depends_on:
+#       - database
+#     ports:
+#       - 80:4000

@@ -3,10 +3,8 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
 
-// for localhost deployment
 // mongoose.connect('mongodb://localhost/qna', { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('successfully connect to QnA DB'));
 
-// for Docker deployment
 mongoose.connect('mongodb://database/qna', { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('successfully connect to QnA DB'));
 mongoose.Promise = global.Promise;
 
